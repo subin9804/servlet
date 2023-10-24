@@ -25,19 +25,19 @@ public class NewsDAO {
 
         return conn;
     }
-    public void close(Connection conn) {
-        try {
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void close(Connection conn) {
+//        try {
+//            pstmt.close();
+//            conn.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public List<News> getAll() throws SQLException {
         Connection conn = open();
         PreparedStatement pstmt = null;
-        pstmt = conn.prepareStatement("SELECT aid, title, PARSEDATETIME(date, 'yyyy-mm-dd hh:mm:ss') AS cdate FROM news");
+        pstmt = conn.prepareStatement("SELECT aid, title, date_format(date, '%Y-%M-%d %h:%m:%s') AS cdate FROM news");
         ResultSet rs = pstmt.executeQuery();
 
         List<News> newsList = new ArrayList<>();
@@ -58,7 +58,7 @@ public class NewsDAO {
     public News getNews(int aid) throws SQLException {
         Connection conn = open();
         PreparedStatement pstmt = null;
-        pstmt = conn.prepareStatement("SELECT aid, title, PARSEDATETIME(date, 'yyyy-mm-dd hh:mm:ss') AS cdate FROM news WHERE aid = ?");
+        pstmt = conn.prepareStatement("SELECT aid, title, img, date_format(date, '%Y-%M-%d %h:%m:%s') AS cdate, content FROM news WHERE aid = ?");
         pstmt.setInt(1, aid);
 
         ResultSet rs = pstmt.executeQuery();
@@ -71,7 +71,7 @@ public class NewsDAO {
         news.setAid(rs.getInt("aid"));
         news.setTitle(rs.getString("title"));
         news.setImg(rs.getString("img"));
-        news.setDate(rs.getString("String"));
+        news.setDate(rs.getString("cdate"));
         news.setContent(rs.getString("content"));
 
         pstmt.close();
@@ -112,20 +112,18 @@ public class NewsDAO {
 //
 //    }
 
-//    public void delete(String id) {
-//        try {
-//            pstmt = conn.prepareStatement("DELETE FROM product WHERE id = ?");
-//            pstmt.setString(1, id);
-//            int res = pstmt.executeUpdate();
-//            if(res == 1) {
-//                System.out.println("삭제 완료");
-//            }
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
+    public void delNews(int aid) throws SQLException {
+        Connection conn = open();
+        PreparedStatement pstmt = conn.prepareStatement("DELETE FROM news WHERE aid = ?");
+        pstmt.setInt(1, aid);
+
+
+        int res = pstmt.executeUpdate();
+
+        if(res == 0) {
+            throw new SQLException("News 삭제 오류");
+        }
+    }
 
 
     public NewsDAO() {
