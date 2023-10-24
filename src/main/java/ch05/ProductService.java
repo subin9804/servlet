@@ -21,7 +21,17 @@ public class ProductService {
         return new ArrayList<>(products.values());
     }
 
-    public Product findById(String id) {
+    public Product findById(String id){
         return products.get(id);
+    }
+
+    public void update(String id, int price){
+        Product p = findById(id);
+        p.setPrice(price);
+        products.put(id, p);
+    }
+
+    public void insert(Product product){
+        products.put(product.getId(), product);
     }
 }
