@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
-<% String cp = request.getContextPath(); %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +13,14 @@
 <body>
 <h2>${news.title}</h2>
 <hr>
+<c:if test="${error != null}">
+    <div class="alert alert-danger alert-dismissible fade show mt-3">
+        error 발생 : ${error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert">
+    </div>
+</c:if>
 <div class="card w-75 mx-auto">
-    <img class="card-img-top" src="<%=cp %>/img${news.img}" alt="news 이미지"/>
+    <img class="card-img-top" src="${news.img}" alt="news 이미지"/>
     <div class="card-body">
         <h4 class="card-title">Date : ${news.date}</h4>
         <p class="card-text">Content : ${news.content}</p>

@@ -37,7 +37,7 @@ public class NewsDAO {
     public List<News> getAll() throws SQLException {
         Connection conn = open();
         PreparedStatement pstmt = null;
-        pstmt = conn.prepareStatement("SELECT aid, title, date_format(date, '%Y-%M-%d %h:%m:%s') AS cdate FROM news");
+        pstmt = conn.prepareStatement("SELECT aid, title, date_format(date, '%Y-%m-%d %h:%m:%s') AS cdate FROM news");
         ResultSet rs = pstmt.executeQuery();
 
         List<News> newsList = new ArrayList<>();
@@ -58,7 +58,7 @@ public class NewsDAO {
     public News getNews(int aid) throws SQLException {
         Connection conn = open();
         PreparedStatement pstmt = null;
-        pstmt = conn.prepareStatement("SELECT aid, title, img, date_format(date, '%Y-%M-%d %h:%m:%s') AS cdate, content FROM news WHERE aid = ?");
+        pstmt = conn.prepareStatement("SELECT aid, title, img, date_format(date, '%Y-%m-%d %h:%m:%s') AS cdate, content FROM news WHERE aid = ?");
         pstmt.setInt(1, aid);
 
         ResultSet rs = pstmt.executeQuery();

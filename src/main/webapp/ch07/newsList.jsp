@@ -13,8 +13,14 @@
 </head>
 <body>
 <div class="container w-75 mt-5 mx-auto">
-<h2>News List</h2>
-<hr>
+    <h2>News List</h2>
+    <hr>
+    <c:if test="${error != null}">
+        <div class="alert alert-danger alert-dismissible fade show mt-3">
+            error 발생 : ${error}
+            <button type="button" class="btn-close" data-bs-dismiss="alert">
+        </div>
+    </c:if>
     <ul class="list-group">
         <c:forEach var="news" items="${newsList}" varStatus="status">
             <li class="list-group-item list-group-action d-flex justify-content-between align-item-center">
@@ -27,7 +33,12 @@
     </ul>
 </div>
 <hr>
-
+<c:if test="${error != null}">
+    <div class="alert alert-danger alert-dismissible fade show mt-3">
+        error 발생 : ${error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert">
+    </div>
+</c:if>
 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#addForm"
         aria-expanded="false" aria-controls="addForm">뉴스 등록</button>
 
