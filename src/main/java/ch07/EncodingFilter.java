@@ -10,7 +10,7 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain fc) throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest)req;
-        if(httpReq.getMethod().equalsIgnoreCase("POST") && httpReq.getMethod().equalsIgnoreCase("GET")) {
+        if(httpReq.getMethod().equalsIgnoreCase("POST") || httpReq.getMethod().equalsIgnoreCase("GET")) {
             req.setCharacterEncoding("utf-8");
         }
 
